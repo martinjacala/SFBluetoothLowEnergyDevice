@@ -258,7 +258,7 @@ static dispatch_queue_t __bleQueue;
 }
 
 
-- (void)didDiscoverPeripheral:(CBPeripheral*)peripheral RSSI:(NSNumber*)RSSI;
+- (void)didDiscoverPeripheral:(CBPeripheral*)peripheral RSSI:(NSNumber*)RSSI advertisementData:(NSDictionary *)advertisementData
 {
   NSAssert(self.shouldScan, @"Peripheral discovered altough should not scan");
   if (!self.shouldScan)
@@ -270,7 +270,7 @@ static dispatch_queue_t __bleQueue;
   
   if (![self.discoveredDevices.allKeys containsObject:peripheral.identifier]) {
     DDLogInfo(@"BLE-Finder: new suitable peripheral %p (%@, %@). RSSI: %@", peripheral, peripheral.identifier, peripheral.name, RSSI);
-    self.discoveredDevices[peripheral.identifier] = [SFBLEDevice deviceWithPeripheral:peripheral centralDelegate:self.centralDelegate servicesAndCharacteristics:self.servicesAndCharacteristics];
+    self.discoveredDevices[peripheral.identifier] = [SFBLEDevice deviceWithPeripheral:peripheral centralDelegate:self.centralDelegate servicesAndCharacteristics:self.servicesAndCharacteristics advertisementData:advertisementData];
   }
 
   if ( (self.identifierToScanFor && [self.identifierToScanFor isEqual:peripheral.identifier]) ||
@@ -280,7 +280,7 @@ static dispatch_queue_t __bleQueue;
     DDLogDebug(@"BLE-Finder: did discover specific peripheral: %@", peripheral);
     [self executeStoppingScanDuties];
     
-    SFBLEDevice* suitableDevice = [SFBLEDevice deviceWithPeripheral:peripheral centralDelegate:self.centralDelegate servicesAndCharacteristics:self.servicesAndCharacteristics];
+    SFBLEDevice* suitableDevice = [SFBLEDevice deviceWithPeripheral:peripheral centralDelegate:self.centralDelegate servicesAndCharacteristics:self.servicesAndCharacteristics advertisementData:advertisementData];
     DISPATCH_ON_MAIN_QUEUE(self.shouldScan = NO; [self.delegate finderFoundDevices:@[suitableDevice] error:nil]);
   }
 }

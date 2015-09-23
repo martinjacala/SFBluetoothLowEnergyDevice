@@ -187,7 +187,7 @@ static NSArray* __managerStateStrings;
   if (!self.shouldScan)
     return;
   
-  [self.deviceManager didDiscoverPeripheral:peripheral RSSI:RSSI];
+  [self.deviceManager didDiscoverPeripheral:peripheral RSSI:RSSI advertisementData:advertisementData];
 }
 
 

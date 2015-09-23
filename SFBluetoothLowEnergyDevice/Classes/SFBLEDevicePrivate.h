@@ -48,7 +48,7 @@ typedef NS_ENUM(NSInteger, SFBLEDeviceState) {
 
 
 // SFBLEDeviceFinder
-+ (instancetype)deviceWithPeripheral:(CBPeripheral*)peripheral centralDelegate:(SFBLECentralManagerDelegate*)centralDelegate servicesAndCharacteristics:(NSDictionary*)servicesAndCharacteristics;
++ (instancetype)deviceWithPeripheral:(CBPeripheral*)peripheral centralDelegate:(SFBLECentralManagerDelegate*)centralDelegate servicesAndCharacteristics:(NSDictionary*)servicesAndCharacteristics advertisementData:(NSDictionary *)advertisementData;
 
 // SFBLECentralManagerDelegate
 @property (nonatomic) CBPeripheral* peripheral;

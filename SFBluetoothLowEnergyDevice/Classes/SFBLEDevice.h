@@ -31,6 +31,7 @@
 @property (nonatomic, readonly) NSUUID*   identifier;
 /// Battery level of device in percent (100 is fully charged, 0 is fully discharged)
 @property (nonatomic, readonly) NSNumber* batteryLevel;
+@property (nonatomic, readonly) NSDictionary* advertisementData;
 
 - (void)readValueForCharacteristic:(CBUUID*)characteristicUUID;
 - (void)writeValue:(NSData*)value forCharacteristic:(CBUUID*)characteristicUUID;

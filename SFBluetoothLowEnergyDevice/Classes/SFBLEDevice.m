@@ -51,25 +51,26 @@ static NSMutableDictionary* __allDiscoveredDevicesSinceAppStart;
 }
 
 
-+ (instancetype)deviceWithPeripheral:(CBPeripheral*)peripheral centralDelegate:(SFBLECentralManagerDelegate*)centralDelegate servicesAndCharacteristics:(NSDictionary*)servicesAndCharacteristics
++ (instancetype)deviceWithPeripheral:(CBPeripheral*)peripheral centralDelegate:(SFBLECentralManagerDelegate*)centralDelegate servicesAndCharacteristics:(NSDictionary*)servicesAndCharacteristics advertisementData:(NSDictionary *)advertisementData
 {
   SFBLEDevice* deviceToReturn = __allDiscoveredDevicesSinceAppStart[peripheral];
   
   if (deviceToReturn)
     return deviceToReturn;
   
-  deviceToReturn = [[SFBLEDevice alloc] initWithPeripheral:peripheral centralDelegate:centralDelegate servicesAndCharacteristics:(NSDictionary*)servicesAndCharacteristics];
+  deviceToReturn = [[SFBLEDevice alloc] initWithPeripheral:peripheral centralDelegate:centralDelegate servicesAndCharacteristics:(NSDictionary*)servicesAndCharacteristics advertisementData:advertisementData];
   __allDiscoveredDevicesSinceAppStart[peripheral] = deviceToReturn;
   
   return deviceToReturn;
 }
-- (id)initWithPeripheral:(CBPeripheral*)peripheral centralDelegate:(SFBLECentralManagerDelegate*)centralDelegate servicesAndCharacteristics:(NSDictionary*)servicesAndCharacteristics
+- (id)initWithPeripheral:(CBPeripheral*)peripheral centralDelegate:(SFBLECentralManagerDelegate*)centralDelegate servicesAndCharacteristics:(NSDictionary*)servicesAndCharacteristics advertisementData:(NSDictionary *)advertisementData
 {
   if (self = [super init]) {
     _timeout = -1.0;
     _peripheral = peripheral;
     _identifier = peripheral.identifier;
     _centralDelegate = centralDelegate;
+    _advertisementData = advertisementData;
     _servicesAndCharacteristics = servicesAndCharacteristics;
     _state = SFBLEDeviceStateUnlinked;
   }

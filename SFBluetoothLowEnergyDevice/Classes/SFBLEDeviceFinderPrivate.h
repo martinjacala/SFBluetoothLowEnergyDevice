@@ -38,7 +38,7 @@
 
 + (dispatch_queue_t)bleQueue;
 // SFBLECentralManagerDelegate
-- (void)didDiscoverPeripheral:(CBPeripheral*)peripheral RSSI:(NSNumber*)RSSI;
+- (void)didDiscoverPeripheral:(CBPeripheral*)peripheral RSSI:(NSNumber*)RSSI advertisementData:(NSDictionary *)advertisementData;
 - (void)bluetoothNotAvailable;
 - (void)bluetoothAvailableAgain;
 
