@@ -267,10 +267,14 @@ static dispatch_queue_t __bleQueue;
   // An RSSI value of 127 is not valid, but it has been encountered regularly
   if (RSSI.integerValue == 127)
     return;
-  
+
   if (![self.discoveredDevices.allKeys containsObject:peripheral.identifier]) {
     DDLogInfo(@"BLE-Finder: new suitable peripheral %p (%@, %@). RSSI: %@", peripheral, peripheral.identifier, peripheral.name, RSSI);
     self.discoveredDevices[peripheral.identifier] = [SFBLEDevice deviceWithPeripheral:peripheral centralDelegate:self.centralDelegate servicesAndCharacteristics:self.servicesAndCharacteristics advertisementData:advertisementData];
+  } else {
+      if (advertisementData) {
+          [self.discoveredDevices[peripheral.identifier] setAdvertisementData:advertisementData];
+      }
   }
 
   if ( (self.identifierToScanFor && [self.identifierToScanFor isEqual:peripheral.identifier]) ||
